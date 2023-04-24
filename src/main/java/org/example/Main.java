@@ -3,6 +3,7 @@ package org.example;
 import org.example.modelos.Fase;
 import org.example.modelos.Persona;
 import org.example.modelos.Pronostico;
+import org.example.modelos.Ronda;
 import org.example.utilidades.LectorCSV;
 import org.example.utilidades.LectorDB;
 
@@ -15,7 +16,7 @@ public class Main {
         LectorCSV lectorCSV = new LectorCSV();
         lectorCSV.tomarResultados();
 
-        LectorDB lectorDB = new LectorDB(lectorCSV);
+        LectorDB lectorDB = new LectorDB(lectorCSV,"localhost:3306/pronosticos","root","admin1234");
         lectorDB.agregarPronosticos();
 
         calcPuntos(lectorDB, puntosPorPartido, puntosExtraPorRonda, puntosExtraPorFase);
@@ -25,18 +26,14 @@ public class Main {
                                    Integer puntosPorPartido,
                                    Integer puntosExtraPorRonda,
                                    Integer puntosExtraPorFase) {
-        for (Pronostico p : lectorDB.getPronosticos()){
-            if (p.fueAcertado()){
+        for (Pronostico p : lectorDB.getPronosticos()) {
+            if (p.fueAcertado()) {
                 p.getPersona().sumarPuntos(puntosPorPartido);
                 p.getPersona().agregarAcierto();
             }
-
         }
 
-//        for (Persona p : lectorDB.getPersonas()){
-//            for (Ronda r : Fase.)
-//        }
-        for(Persona p : lectorDB.getPersonas()){
+        for (Persona p : lectorDB.getPersonas()) {
             System.out.println("Nombre" + p.getNombre());
             System.out.println("Acierto" + p.getCantAciertos());
             System.out.println("Puntaje" + p.getAciertos());

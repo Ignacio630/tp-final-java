@@ -13,7 +13,7 @@ public class Ronda {
         this.partidos = new ArrayList<>();
     }
 
-    public void agregarPartido(Partido partido) {
+    public void agregarPartido(Partido partido)  {
         for(Partido p : this.partidos){
             if (p.igual(partido)){
                 throw new RuntimeException("El partido ya existe");

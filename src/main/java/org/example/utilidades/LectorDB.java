@@ -20,11 +20,17 @@ public class LectorDB {
     private List<Pronostico> pronosticos;
 
     private List<Persona> personas;
+
+    private List<Fase> fases;
     private LectorCSV lectorCSV;
-    public LectorDB(LectorCSV lectorCSV) {
+    public LectorDB(LectorCSV lectorCSV, String direccDB, String user, String password) {
         this.lectorCSV = lectorCSV;
         this.pronosticos = new ArrayList<>();
         this.personas = new ArrayList<>();
+        this.direccDB = direccDB;
+        this.user = user;
+        this.password = password;
+        this.fases = new ArrayList<>();
     }
 
     public List<Pronostico> getPronosticos() {
