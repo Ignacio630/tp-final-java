@@ -34,9 +34,10 @@ public class Main {
         }
 
         for (Persona p : lectorDB.getPersonas()) {
-            System.out.println("Nombre" + p.getNombre());
-            System.out.println("Acierto" + p.getCantAciertos());
-            System.out.println("Puntaje" + p.getAciertos());
+            System.out.println("--------------------------------------\n");
+            System.out.println("Nombre= " + p.getNombre());
+            System.out.println("Acierto= " + p.getCantAciertos());
+            System.out.println("Puntaje= " + p.getAciertos());
             System.out.println("--------------------------------------");
         }
     }

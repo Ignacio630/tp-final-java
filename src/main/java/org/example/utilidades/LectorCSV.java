@@ -5,6 +5,12 @@ import org.example.modelos.Fase;
 import org.example.modelos.Partido;
 import org.example.modelos.Ronda;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +19,8 @@ public class LectorCSV {
     List<Fase> fases;
 
     List<Equipo> equipos;
+
+    private String directCSV;
 
     public LectorCSV() {
         this.fases = new ArrayList<>();
@@ -28,16 +36,43 @@ public class LectorCSV {
     }
 
     public void tomarResultados() {
+        this.directCSV = "\"src/main/resources/Resultados.csv\"";
+        try {
+            Path csvPath = Paths.get("src/main/resources/Resultados.csv");
+
+            // Lee todas las líneas del archivo
+            List<String> lines = Files.readAllLines(csvPath);
+
+            // Crea los equipos y partidos a partir de las líneas del archivo
+            for (String line : lines) {
+                String[] values = line.split(",");
+                Ronda ronda = new Ronda(Integer.parseInt(values[1]));
+                String equipo_1 = values[2];
+                String equipo_2 = values[3];
+
+                Equipo equipo1 = new Equipo(equipo_1);
+                Equipo equipo2 = new Equipo(equipo_2);
+                Partido partido = new Partido(equipo1, equipo2, Integer.parseInt(values[4]), Integer.parseInt(values[5]));
+
+                // Agrega el partido a la ronda correspondiente
+                ronda.agregarPartido(partido);
+
+
+            }
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
         Equipo argentina = this.getEquipo("Argentina", "Argentina");
-        Equipo bolivia = this.getEquipo("Bolivia", "Bolivia");
-        Equipo chile = this.getEquipo("Chile", "Chile");
+        Equipo mexico = this.getEquipo("Mexico", "Mexico");
+        Equipo polonia = this.getEquipo("Polonia", "Polonia");
         Equipo arabiaSaudita = this.getEquipo("Arabia Saudita", "Arabia Saudita");
 
 
-        Partido p1 = new Partido(argentina, bolivia, 3, 1);
+        Partido p1 = new Partido(argentina, mexico, 3, 1);
         Partido p2 = new Partido(arabiaSaudita, argentina, 2, 1);
-        Partido p3 = new Partido(bolivia, chile, 1, 2);
-        Partido p4 = new Partido(chile, arabiaSaudita, 1, 4);
+        Partido p3 = new Partido(mexico, polonia, 1, 2);
+        Partido p4 = new Partido(polonia, arabiaSaudita, 1, 4);
 
         Ronda r1 = new Ronda(1);
 
@@ -69,7 +104,7 @@ public class LectorCSV {
             }
         }
         if (equipo == null) {
-            equipo = new Equipo(nombreEquipo, descripcionEquipo);
+            equipo = new Equipo(nombreEquipo);
             this.equipos.add(equipo);
         }
         return equipo;

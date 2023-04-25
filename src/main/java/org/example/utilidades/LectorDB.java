@@ -69,7 +69,7 @@ public class LectorDB {
             Connection con = DriverManager.getConnection("jdbc:mysql://" + this.direccDB ,this.user ,this.password);
             Statement stmt = con.createStatement();
 
-            ResultSet rs=stmt.executeQuery("select * from persona");
+            ResultSet rs=stmt.executeQuery("select * from pronosticos");
             while (rs.next()){
 
                 Fase fase = lectorCSV.getFase(rs.getInt("fase"));
